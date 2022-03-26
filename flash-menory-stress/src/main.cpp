@@ -7,7 +7,7 @@
 
 
 Preferences preferences;
-long maxCountSave = 5001000;
+long maxCountSave = 50000000;
 long counter;
 
 
