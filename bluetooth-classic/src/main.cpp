@@ -16,11 +16,10 @@ String device_name = "ESP32 Bluetooth";
 BluetoothSerial SerialBT;
 Preferences preferences;
 
-String message = MESSAGE;
-
 void setup() {
     preferences.begin("esp32", false);
-    preferences.putBool("ECHO", ECHO);
+    if(!preferences.isKey("ECHO")) preferences.putBool("ECHO", ECHO);
+    if(!preferences.isKey("MESSAGE")) preferences.putString("MESSAGE", MESSAGE);
 
     Serial.begin(115200);
     SerialBT.begin(device_name);
@@ -29,11 +28,21 @@ void setup() {
 
 
 void loop() {
-    while (SerialBT.available()){
-        message += String(SerialBT.read());
+    if(SerialBT.available()){
+        String message = SerialBT.readString();
+        message.trim();
+        if (message == "NO_ECHO") {
+            preferences.putBool("ECHO", 0);
+        }
+        else if (message == "ECHO") {
+            preferences.putBool("ECHO", 1);
+        }
+        else{
+            preferences.putString("MESSAGE", message);
+        }
     }
     if(preferences.getBool("ECHO")){
-        SerialBT.println(message);
+        SerialBT.println(preferences.getString("MESSAGE"));
     }
     delay(1000);
 }
