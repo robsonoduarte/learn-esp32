@@ -9,6 +9,6 @@ pio run -e esp32doit-devkit-v1 -t upload
 ````
 
 #### to test with [Serial Bluetooth App](https://play.google.com/store/apps/details?id=de.kai_morich.serial_bluetooth_terminal):
-![](serial-bluetooth-terminal.gif)
+<img src="serial-bluetooth-terminal.gif" width="250"/>
 
 
